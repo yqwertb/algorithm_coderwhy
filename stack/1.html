@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Stack() {
+      this.items = []
+
+      Stack.prototype.push = function (item) {
+        this.items.push(item)
+      }
+
+      Stack.prototype.pop = function () {
+        return this.items.pop()
+      }
+
+      Stack.prototype.peek = function () {
+        return this.items[this.items.length - 1]
+      }
+
+      Stack.prototype.isEmpty = function () {
+        return true ? this.items.length === 0 : this.items.length !== 0
+      }
+
+      Stack.prototype.getItem = function () {
+        return this.items.length
+      }
+
+      Stack.prototype.toString = function () {
+        let string = ''
+        for (let n = 0; n < this.items.length; n++) {
+          string = string + this.items[n] + ' '
+        }
+
+        return string
+      }
+    }
+
+    let s = new Stack()
+    s.push(1)
+    s.push(22)
+    s.push(234)
+    s.push(435643)
+    console.log(s.items)
+    console.log(s.toString())
+    console.log(s.peek())
+    console.log(s.isEmpty())
+    console.log(s.getItem())
+    s.pop()
+    console.log(s.items)
+
+    //函数 将十进制转为二进制
+    function dec2bin(decNumber) {
+      //1.定义栈对象
+      let s = new Stack()
+      // 2.循环操作
+      while (decNumber > 0) {
+        // 2.1.将余数压入栈
+        s.push(decNumber % 2)
+        // 2.2.将结果向下取整赋值给decNumber
+        decNumber = Math.floor(decNumber / 2)
+       
+      }
+      // 3.从栈中取出0 1
+      let binStr = ''
+      if(s.getItem() % 4 !== 0) {
+        let index = 4 - s.getItem() % 4
+        for (let n = 0; n < index; n++) {
+          binStr = binStr + '0'
+        }
+      }
+      while (!s.isEmpty()) {
+        console.log(s.items)
+        binStr = binStr + s.pop()
+      }
+      return binStr
+    }
+
+    console.log(dec2bin(19))
+  </script>
+</body>
+
+</html>
