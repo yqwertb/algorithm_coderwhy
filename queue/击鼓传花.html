@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function Queue() {
+      // 属性
+      this.items = []
+
+      // 方法
+      Queue.prototype.enqueue = function(item) {
+        this.items.push(item)
+        // item = item instanceof Array ? item[0] : item
+        // let length = item.length
+        // if(length > 1) {
+        //   for(let n = 0; n < length; n++) {
+        //     this.items.push(item[n])
+        //   }
+        // } else {
+        //   this.items.push(item)
+        // }
+      }
+
+      Queue.prototype.dequeue = function() {
+        return this.items.shift()
+      }
+
+      Queue.prototype.front = function() {
+        if(this.items.length - 1 > 0 || this.items.length - 1 === 0) {
+          return this.items[0]
+        } else {
+          return '队列为空'
+        }
+      }
+
+      Queue.prototype.isEmpty = function() {
+        let length = this.items.length
+
+        return true ? length === 0 : length !== 0 
+      }
+
+      Queue.prototype.size = function() {
+        let length = this.items.length
+
+        if(length > 0) {
+          return length
+        } else {
+          return '队列为空'
+        }
+      }
+
+      Queue.prototype.toString = function() {
+        let string = ''
+        let length = this.items.length
+
+        if(length > 0) {
+          for(let n = 0; n < length; n++) {
+            string = string + this.items[n] + ' '
+          }
+        } else {
+          string =  '队列为空'
+        }
+       
+       return string
+      }
+    }
+
+    function passGame(nameList, num) {
+      // 1.创建队列
+      let queue = new Queue()
+
+      // 2.将人名加入队列
+      // queue.enqueue(namaList)
+      for (let n = 0; n < nameList.length; n++) {
+        queue.enqueue(nameList[n])
+      }
+      console.log(queue.items)
+      // 3.开始数数字
+      while (queue.size() > 1) {
+        // 3.1 num之前的人名放到队列尾部
+        for (let n = 0; n < num - 1; n++) {
+          queue.enqueue(queue.dequeue())
+        }
+        // 3.2 num对应的人名直接删除
+        queue.dequeue()
+      }
+
+      // 4. 获取剩下的人
+      return queue.front()
+    }
+
+    let names = ['abc', 'ewr', 'fdg', 'dfsgas', 'cvdrf', 'fdgg']
+    let winner = passGame(names, 6) 
+    console.log(winner)
+  </script>
+</body>
+</html>

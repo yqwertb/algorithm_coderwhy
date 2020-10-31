@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function Queue() {
+      // 属性
+      this.items = []
+
+      // 方法
+      Queue.prototype.enqueue = function(...item) {
+        let length = item.length
+        if(length > 1) {
+          for(let n = 0; n < length; n++) {
+            this.items.push(item[n])
+          }
+        } else {
+          this.items.push(item)
+        }
+      }
+
+      Queue.prototype.dequeue = function() {
+        return this.items.shift()
+      }
+
+      Queue.prototype.front = function() {
+        if(this.items.length - 1 > 0) {
+          return this.items[0]
+        } else {
+          return '队列为空'
+        }
+      }
+
+      Queue.prototype.isEmpty = function() {
+        let length = this.items.length
+
+        return true ? length === 0 : length !== 0 
+      }
+
+      Queue.prototype.size = function() {
+        let length = this.items.length
+
+        if(length > 0) {
+          return length
+        } else {
+          return '队列为空'
+        }
+      }
+
+      Queue.prototype.toString = function() {
+        let string = ''
+        let length = this.items.length
+
+        if(length > 0) {
+          for(let n = 0; n < length; n++) {
+            string = string + this.items[n] + ' '
+          }
+        } else {
+          string =  '队列为空'
+        }
+       
+       return string
+      }
+    }
+
+    let queue = new Queue()
+
+    queue.enqueue(1, 2, 3)
+    console.log(queue.items)
+    // queue.dequeue()
+    console.log(queue.front())
+    console.log(queue.isEmpty())
+    console.log(queue.size())
+    console.log(queue.toString())
+    console.log(queue.items)
+  </script>
+</body>
+</html>

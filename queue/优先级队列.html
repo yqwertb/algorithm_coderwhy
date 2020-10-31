@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function PriorityQueue() {
+      // 1.创建单个元素的类
+      function QueueElement(item, priorty) {
+        this.item = item
+        this.priorty = priorty
+      }
+      // 2.属性
+      this.items = []
+
+      // 3.加入元素
+      PriorityQueue.prototype.enqueue = function (item, priorty) {
+        let queueElement = new QueueElement(item, priorty)
+
+        if(this.isEmpty()) {
+          this.items.push(queueElement)
+        } else {
+          let added = false
+          for(let n = 0; n < this.items.length; n++) {
+            if(queueElement.priorty < this.items[n].priorty) {
+              this.items.splice(n, 0, queueElement)
+              console.log(this.items.length);
+              added = !added
+              break
+            }
+          }
+
+          if(!added) {
+            this.items.push(queueElement)
+          }
+        }
+      }
+      
+      PriorityQueue.prototype.dequeue = function() {
+        return this.items.shift()
+      }
+
+      PriorityQueue.prototype.front = function() {
+        if(this.items.length - 1 > 0 || this.items.length - 1 === 0) {
+          return this.items[0]
+        } else {
+          return '队列为空'
+        }
+      }
+
+      PriorityQueue.prototype.isEmpty = function() {
+        let length = this.items.length
+
+        return true ? length === 0 : length !== 0 
+      }
+
+      PriorityQueue.prototype.size = function() {
+        let length = this.items.length
+
+        if(length > 0) {
+          return length
+        } else {
+          return '队列为空'
+        }
+      }
+
+      PriorityQueue.prototype.toString = function() {
+        let string = ''
+        let length = this.items.length
+
+        if(length > 0) {
+          for(let n = 0; n < length; n++) {
+            string = string + this.items[n] + ' '
+          }
+        } else {
+          string =  '队列为空'
+        }
+       
+       return string
+      }
+    }
+
+    let pq = new PriorityQueue()
+    pq.enqueue('fdg', 999)
+    pq.enqueue('ng', 10)
+    pq.enqueue('fgh', 7)
+
+    console.log(pq.items);
+  </script>
+</body>
+</html>
