@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function LinkedList() {
+      this.head = null
+      this.length = 0
+      function Node(data) {
+        this.data = data
+        this.next = null
+      }
+
+      // 追加方法
+      LinkedList.prototype.append = function(data) {
+        // 1.创建新节点
+        let newNode = new Node(data)
+        // 2.判断是否为第一个节点
+        if (!this.head) {
+          this.head = newNode
+        } else {
+          let current = this.head
+          while(current.next) {
+            current = current.next
+          }
+          current.next = newNode
+        }
+        // 3.增加长度
+        this.length += 1
+      }
+      LinkedList.prototype.insert = function(pos, data) {
+        // 1.判断位置是否越界
+        if(pos < 0 || pos > this.length) return false
+        // 2.创建新的node节点
+        let newNode = new Node(data)
+        // 3.分情况插入节点
+        if (pos === 0) {
+          newNode.next = this.head
+          this.head = newNode
+        } else {
+          let current = this.head
+          let index = 0
+          while (++index < pos) {
+            current = current.next
+            /* pos 1 current指向之前pos为1的data
+            current = this.head
+            current = data0.next
+            */
+          }
+          newNode.next = current.next
+          current.next = newNode
+        }
+
+        return this.length++
+      }
+      LinkedList.prototype.get = function(pos) {
+        if(pos < 0 || pos > this.length || pos === this.length) return false
+        let current = this.head
+        let index = 0
+        while(index++ < pos) {
+          current = current.next
+        }
+
+        return current
+      }
+      LinkedList.prototype.indexOf = function(data) {
+        let current = this.head, index = 0
+        while(current) {
+          if(current.data === data) {
+            return index
+          }
+          current = current.next
+          index++
+        }
+
+        return -1
+      }
+      LinkedList.prototype.update = function(pos, data) {
+        if(pos < 0 || pos >= this.length) return false
+        let current = this.head
+        let index = 0
+        while(index++ < pos) {
+          current = current.next
+        }
+        current.data = data
+      }
+      LinkedList.prototype.removeAt = function(pos) {
+        if(pos < 0 || pos >= this.length) return false
+       
+        if(pos === 0) {
+          this.head = this.head.next
+        } else {
+          let current = this.head
+          let previous = null
+          let index = 0
+          while(++index < pos) {
+            current = current.next
+          }
+          current.next = current.next.next
+        }
+        this.length--
+      }
+      LinkedList.prototype.remove = function(data) {
+        console.time('remove')
+        // let index = 0
+        if(this.head.data === data) {
+          this.head = this.head.next
+        } else {
+          let flag = true
+          let current = this.head
+          while(flag) {
+            console.log(current);
+            if(current.next.data === data) {
+              current.next = current.next.next
+              flag = false
+            } else {
+              current = current.next
+            }  
+          }
+        }
+        this.length = this.length - 1
+        console.timeEnd('remove')
+      }
+      LinkedList.prototype.remove1 = function(data) {
+        console.time('remove1')
+        let index = 0
+        // let flag = true
+        let current = this.head
+        while(++index < this.length) {
+          console.log(current);
+          if(current.data === data) {
+            break
+          } else {
+            current = current.next
+          }
+        }
+        console.log(index--);
+        current.next = current.next
+        console.timeEnd('remove1')
+      }
+      LinkedList.prototype.toString = function() {
+        let str = ''
+        let current = this.head
+        while(current) {
+          str = str + current.data + ' '
+          current = current.next
+        }
+        return str
+      }
+    }
+    let linked = new LinkedList()
+    linked.append('q')
+    linked.append('w')
+    linked.append('e')
+    // console.log(linked.toString())
+    linked.insert(3, 'r')
+    console.log(linked.toString())
+    // console.log(linked.length)
+    // console.log(linked.get(0))
+    // console.log(linked.indexOf('w'));
+    // linked.update(2, 'qq')
+    // console.log(linked.toString());
+    // linked.removeAt(2)
+    // console.log(linked.toString());
+    // console.log(linked.length);
+    linked.remove('e')
+    // linked.remove1('q')
+    console.log(linked.length);
+    console.log(linked.toString())
+  </script>
+</body>
+</html>
