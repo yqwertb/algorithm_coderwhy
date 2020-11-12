@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function DoubleLinkedList() {
+      this.head = null
+      this.tail = null
+      this.length = 0
+
+    }
+    function Node(data) {
+        this.data = data
+        this.prev = null
+        this.next = null
+    }
+    DoubleLinkedList.prototype.append = function(data) {
+      let newNode = new Node(data)
+      if(!this.length) {
+        this.head = newNode
+        this.tail = newNode
+      } else {
+        newNode.prev = this.tail
+        this.tail.next = newNode
+        this.tail = newNode
+      }
+      this.length += 1
+    }
+
+    DoubleLinkedList.prototype.tmp = function() {
+
+    }
+    DoubleLinkedList.prototype.tmp = function() {
+
+    }
+
+    let double = new DoubleLinkedList()
+    double.append('sdaf')
+    double.append('srfgfddaf')
+    console.log(double);
+  </script>
+</body>
+</html>
