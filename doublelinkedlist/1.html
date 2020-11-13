@@ -11,7 +11,6 @@
       this.head = null
       this.tail = null
       this.length = 0
-
     }
     function Node(data) {
         this.data = data
@@ -30,18 +29,105 @@
       }
       this.length += 1
     }
+    DoubleLinkedList.prototype.insert = function(pos, data) {
+      if(pos < 0 || pos > this.length) return false
 
+      let newNode = new Node(data)
+      if(!this.length) {
+        this.head = newNode
+        this.tail = newNode
+      } else {
+        if(!pos) {
+          newNode.next = this.head
+          this.head = newNode
+          // 忘了下面这个
+          this.head.prev = newNode
+        } else if(pos === this.length){
+          newNode.prev = this.tail
+          this.tail.next = newNode
+          this.tail = newNode
+        } else {
+          let current = this.head
+          let index = 0
+          while(index++ < pos) {
+            current = current.next
+          }
+          newNode.prev = current.prev
+          newNode.next = current
+          newNode.prev.next = newNode
+          current.prev = newNode
+        }
+      }
+
+      this.length += 1
+    }
+    DoubleLinkedList.prototype.get = function(pos) {
+      if(pos < 0 || pos >= this.length) return false
+      let index, current
+      if(this.length / 2 > pos) {
+        index = 0
+        current = this.head
+        while(index++ < pos) {
+          current = current.next
+        }
+      } else {
+        index = this.length - 1
+        current = this.tail
+        while(index-- > pos) {
+          current = current.prev
+        }
+      }
+
+      return current.data
+    }
     DoubleLinkedList.prototype.tmp = function() {
 
     }
     DoubleLinkedList.prototype.tmp = function() {
 
+    }
+    DoubleLinkedList.prototype.tmp = function() {
+
+    }
+    DoubleLinkedList.prototype.tmp = function() {
+
+    }    
+    DoubleLinkedList.prototype.toString = function() {
+      return this.forwardString()
+    }
+    DoubleLinkedList.prototype.forwardString = function() {
+      let current = this.head
+      let str = ''
+
+      while(current) {
+        str = str + current.data + ' '
+        current = current.next
+      }
+
+      return str
+    }
+    DoubleLinkedList.prototype.backwardString = function() {
+      let current = this.tail
+      let str = ''
+
+      while(current) {
+        str = str + current.data + ' '
+        current = current.prev
+      }
+
+      return str
     }
 
     let double = new DoubleLinkedList()
-    double.append('sdaf')
-    double.append('srfgfddaf')
-    console.log(double);
+    double.append('abc')
+    double.append('qwe')
+    double.append('plm')
+    double.append('zxc')
+    double.insert(2, 'qaz')
+    // console.log(double);
+    // console.log(double.forwardString());
+    // console.log(double.backwardString());
+    console.log(double.toString());
   </script>
 </body>
 </html>
