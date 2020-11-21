@@ -80,14 +80,91 @@
 
       return current.data
     }
-    DoubleLinkedList.prototype.tmp = function() {
+    DoubleLinkedList.prototype.indexOf = function(data) {
+      let current = this.head
+      let index = 0
+      while(current) {
+        if(current.data === data) {
+          return index
+        } else {
+          current = current.next
+          index = index + 1
+        }
+      }
 
+      return -1
     }
-    DoubleLinkedList.prototype.tmp = function() {
+    DoubleLinkedList.prototype.update = function(pos, data) {
+      if(pos < 0 || pos >= this.length) return false
 
+      let current, index
+
+      if(this.length / 2 > pos) {
+        current = this.head
+        index = 0
+        while(index !== pos) {
+          current = current.next
+          index = index + 1
+        }
+      } else {
+        current = this.tail
+        index = this.length - 1
+        while(index !== pos) {
+          current = current.prev
+          index = index - 1
+        }
+      }
+      current.data = data
     }
-    DoubleLinkedList.prototype.tmp = function() {
+    DoubleLinkedList.prototype.removeAt = function(pos) {
+      if(pos < 0 || pos >= this.length) return null
+      
+      let remove = null
 
+      if(this.length === 1) {
+        remove = this.head.data
+        this.head = null
+        this.tail = null
+      } else if(pos === this.length - 1) {
+        remove = this.tail.data
+        this.tail.prev.next = null 
+        this.tail = this.tail.prev
+      } else if(pos === 0) {
+        remove = this.head.data
+        this.head.next.prev = null
+        this.head = this.head.next
+      } else {
+        let current, index
+        if(this.length / 2 > pos) {
+          current = this.head
+          index = 0
+          while(index !== pos) {
+            current = current.next
+            index = index + 1
+          }
+          remove = current.data
+          current.prev.next = current.next
+          current.next.prev = current.prev
+        } else {
+          current = this.tail
+          index = this.length - 1
+          while(index !== pos) {
+            current = current.prev
+            index = index - 1
+          }
+          remove = current.data
+          current.prev.next = current.next
+          current.next.prev = current.prev
+        }
+      }
+
+      this.length = this.length - 1
+      return remove
+    }
+    DoubleLinkedList.prototype.remove = function(data) {
+      let index = this.indexOf(data)
+
+      return this.removeAt(index)
     }
     DoubleLinkedList.prototype.tmp = function() {
 
@@ -124,10 +201,15 @@
     double.append('plm')
     double.append('zxc')
     double.insert(2, 'qaz')
-    // console.log(double);
     // console.log(double.forwardString());
     // console.log(double.backwardString());
     console.log(double.toString());
+    // double.update(2, 'qqq')
+    console.log(double.removeAt(0));
+    // console.log(double);
+    console.log(double.remove('qwe'));
+    console.log(double.toString());
+    console.log(double.indexOf('qwe'));
   </script>
 </body>
 </html>
