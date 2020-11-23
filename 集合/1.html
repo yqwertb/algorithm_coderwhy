@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    function Set() {
+      this.items = {}
+    }
+
+    Set.prototype.add = function (item) {
+      if(this.has(item)) return false
+
+      this.items[item] = item
+      return true
+    }
+
+    Set.prototype.has = function (item) {
+      return this.items.hasOwnProperty(item)
+    }
+    Set.prototype.remove = function (item) {
+      if(!this.has(item)) return false
+
+      delete this.items[item]
+      return true
+    }
+    Set.prototype.clear = function () {
+      this.items = {}
+    }
+    Set.prototype.size = function () {
+      return Object.keys(this.items).length
+    }
+    Set.prototype.values = function () {
+      return Object.keys(this.items)
+    }
+    Set.prototype.union = function (otherItems) {
+      let values = this.values()
+      let unionSet = new Set()
+      for(let n = 0; n < values.length; n++) {
+        unionSet.add(values[n])
+      }
+
+      values = otherItems.values()
+      for(let n = 0; n < values.length; n++) {
+        unionSet.add(values[n])
+      }
+
+      return unionSet
+    }
+    // 交集
+    Set.prototype.intersection = function (otherItems) {
+      let intersection = new Set()
+      let values = this.values()
+
+      for(let n = 0; n < values.length; n++) {
+        let flag = otherItems.has(values[n])
+        if(flag) {
+          intersection.add(values[n])
+        }
+      }
+
+      return intersection
+    }
+    Set.prototype.diff = function (otherItems) {
+      let diff = new Set()
+      let values = this.values()
+      let flag
+      for(let n = 0; n < values.length; n++) {
+        flag = otherItems.has(values[n])
+        if(!flag) {
+          diff.add(values[n])
+        }
+      }
+      return diff      
+    }
+    Set.prototype.subSet = function (otherItems) {
+      let len = this.size()
+      let otherLen = otherItems.size()
+      if(len < otherLen) return false
+
+      let subSet = new Set()      
+      let values = otherItems.values()
+      let flag
+      for(let n = 0; n < values.length; n++) {
+        flag = this.has(values[n]) 
+
+        if(flag) {
+          subSet.add(values[n])
+        }
+      }
+
+      return subSet
+    }
+    let set = new Set()
+    set.add('f')
+    set.add('ftrh')
+    set.add('sdf')
+    let other = new Set()
+    other.add('34tf')
+    other.add('ftrh')
+    other.add('sewftdf')
+    console.log(set.union(other).items);
+    console.log(set.intersection(other).items);
+    console.log(set.diff(other).items);
+    console.log(set.subSet(other).items);
+    // console.log(set.has('f'));
+    // set.remove('f')
+    // set.clear()
+    // console.log(set.values());
+    // console.log(set.size());
+    console.log(set.items);
+  </script>
+</body>
+</html>
